@@ -45,71 +45,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-git" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/06/09/git/" class="article-date">
-  <time class="dt-published" datetime="2023-06-09T02:21:12.287Z" itemprop="datePublished">2023-06-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="Git安装配置"><a href="#Git安装配置" class="headerlink" title="Git安装配置"></a>Git安装配置</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">下载地址： https://git-scm.com/download，选择Windows操作系统下载</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/1.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安装过程中需要注册，填写用户名及邮箱</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/2.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注：安装完成后需要手动重启资源管理器或重启电脑。</span><br></pre></td></tr></table></figure>
-<h2 id="Git初始化"><a href="#Git初始化" class="headerlink" title="Git初始化"></a>Git初始化</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">初始化一个本地仓</span><br><span class="line"> 选择新建的git_test文件，右键单机，选择Git在这里创建版本库</span><br></pre></td></tr></table></figure>
-<p> <img src="/../git/3.jpg" alt="图"><br> <img src="/../git/4.jpg" alt="图"><br> <img src="/../git/5.jpg" alt="图"><br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">操作后可以发现在git_test文件图标上出现了绿色的小勾，说明本地仓库创建成功，在进入该文件夹后还可以发现一个.git文件。此时，git初始化仓库就完成了。</span><br></pre></td></tr></table></figure><br><img src="/../git/6.jpg" alt="图"></p>
-<h2 id="概念即详解"><a href="#概念即详解" class="headerlink" title="概念即详解"></a>概念即详解</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">图中有远程仓库、本地仓库、工作区以及暂存区。</span><br><span class="line">本地仓库：是在开发人员自己电脑上的Git仓库,存放我们的代码。</span><br><span class="line">远程仓库：是在远程服务器上的Git仓库，一般是上传至企业的代码总仓库。</span><br><span class="line">工作区: 我们自己编写代码的区域。</span><br><span class="line">暂存区: 在本地仓库中的一个特殊的文件叫做暂存区,用来临时存储我们即将要提交的文件。</span><br></pre></td></tr></table></figure>
-<h2 id="Git的操作"><a href="#Git的操作" class="headerlink" title="Git的操作"></a>Git的操作</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Clone：克隆，就是将远程仓库复制到本地仓库。</span><br><span class="line">Push：推送，就是将本地仓库代码上传到远程仓库。</span><br><span class="line">Pull：拉取，就是将远程仓库代码下载到本地仓库，并将代码克隆到本地工作区。</span><br></pre></td></tr></table></figure>
-<h2 id="Git下的文件存在的状态"><a href="#Git下的文件存在的状态" class="headerlink" title="Git下的文件存在的状态"></a>Git下的文件存在的状态</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1 untracked 未跟踪: 比如新建的文件(此时文件夹上没有图标或者有一个&quot;问号&quot;)</span><br><span class="line">2 tracked 已跟踪：    </span><br><span class="line">    2.1 Staged 已暂存状态:添加 但未提交状态(此时文件夹上有一个&quot;加号&quot;)</span><br><span class="line">	2.2 Unmodified 未修改状态:已提交(此时文件夹上有一个&quot;对号&quot;)</span><br><span class="line">	2.3 Modified 已修改状态:修改了,但是还没有提交 (此时文件夹上有一个&quot;红色感叹号&quot;)</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/7.jpg" alt="图"><br><img src="/../git/8.jpg" alt="图"><br><img src="/../git/9.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如再次对文件进行修改，文件图表旁会出现一个红色的叹号。</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/10.jpg" alt="图"><br><img src="/../git/11.jpg" alt="图"><br><img src="/../git/12.jpg" alt="图"><br><img src="/../git/13.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">回退至历史版本等操作</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../git/14.jpg" alt="图"><br><img src="/../git/15.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">忽略提交</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../git/16.jpg" alt="图"><br><img src="/../git/17.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">分支</span><br><span class="line">单线程开发</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/18.jpg" alt="图"><br><img src="/../git/19.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">创建分支 主分支(master)</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../git/20.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查看分支</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/21.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">切换分支</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/22.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">分支的合并与删除</span><br><span class="line">切换到 主版本</span><br><span class="line">右键 合并即可将需求1 写的代码合并至主分支</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/23.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">删除分支</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/24.jpg" alt="图"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">代码合并时会报错,我们叫做冲突。</span><br></pre></td></tr></table></figure>
-<p><img src="/../git/25.jpg" alt="图"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/06/09/git/" data-id="clinyyi1z000078td7hwe6z8t" data-title="" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hive" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-hive" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/06/09/hive/" class="article-date">
   <time class="dt-published" datetime="2023-06-09T01:06:57.644Z" itemprop="datePublished">2023-06-09</time>
@@ -154,62 +90,29 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/06/06/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2023-06-06T07:37:58.924Z" itemprop="datePublished">2023-06-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <a href="/2023/06/09/git/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
+          (no title)
+        
+      </div>
+    </a>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/06/06/hello-world/">Hello World</a>
-    </h1>
   
+    <a href="/2023/06/06/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/06/06/hello-world/" data-id="clinyyi28000278tdchypg9nd" data-title="Hello World" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
   
 </article>
 
-
-
-  
 
 </section>
         <aside id="sidebar">
