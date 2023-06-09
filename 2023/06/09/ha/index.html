@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Spark(HA) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-ha" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/06/09/ha/" class="article-date">
+  <time class="dt-published" datetime="2023-06-09T05:45:32.304Z" itemprop="datePublished">2023-06-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Spark(HA)
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Spark-StandAloneHA搭建"><a href="#Spark-StandAloneHA搭建" class="headerlink" title="Spark StandAloneHA搭建"></a>Spark StandAloneHA搭建</h1><h2 id="1-首先配置spark-env-sh"><a href="#1-首先配置spark-env-sh" class="headerlink" title="1.首先配置spark-env.sh"></a>1.首先配置spark-env.sh</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> 删除SPARK_MASTER_HOST=node1这么操作的含义是不指定Master方便我们后续切换Master并在后面增加下面内容指定zookeeper</span><br><span class="line"></span><br><span class="line">_DAEMON_JAVA_OPTS=&quot;-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deploy.zookeeper.url=node1:2181,node2:2181,node3:2181 -Dspark.deploy.zookeeper.dir=/spark-ha&quot;</span><br><span class="line"></span><br><span class="line"># spark.deploy.recoveryMode 指定HA模式 基于Zookeeper实现</span><br><span class="line"># 指定Zookeeper的连接地址</span><br><span class="line"># 指定在Zookeeper中注册临时节点的路径</span><br><span class="line"># 然后将spark分发到node2和node3中</span><br></pre></td></tr></table></figure>
+<p><img src="/../sparkha/1.png" alt="图"></p>
+<h2 id="2-测试Spark-StandAloneHA"><a href="#2-测试Spark-StandAloneHA" class="headerlink" title="2.测试Spark StandAloneHA"></a>2.测试Spark StandAloneHA</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">先在node1上启动一个master和全部的woiker</span><br><span class="line">然后在node2上启动一个备用的maste</span><br></pre></td></tr></table></figure>
+<p><img src="/../sparkha/2.png" alt="图"><br><img src="/../sparkha/3.png" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如图node1的状态是alive node2的状态是standy</span><br><span class="line">提交一个任务到node1上的spark</span><br><span class="line">bin/spark-submit --master spark://node1:7077 /export/server/spark/examples/src/main/python/pi.py 1000</span><br></pre></td></tr></table></figure>
+<p><img src="/../sparkha/4.png" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">然后另起一台node1杀死node1的master</span><br></pre></td></tr></table></figure>
+<p><img src="/../sparkha/5.png" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以看到断开连接，等待一段时间。</span><br></pre></td></tr></table></figure>
+<p><img src="/../sparkha/6.png" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">发现程序执行成功代表我们的HA模式搭建成功。在node1的master出现问题崩溃掉的时候会自动切换到node2的备用master上使我们的程序不会崩溃。</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/06/09/ha/" data-id="clio5a5jp0004y4td4ha46fo3" data-title="Spark(HA)" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/06/09/local/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spark(local)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/06/09/Docker/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Docker</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/09/alone/">Spark(stand-alone)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/yarn/">Spark(Yarn)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/local/">Spark(local)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/ha/">Spark(HA)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/Docker/">Docker</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 By Autoload<br>
+      Driven - <a href="https://hexo.io/" target="_blank">Hexo</a>|Theme - <a href="https://github.com/autoload/hexo-theme-auto" target="_blank">Auto</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

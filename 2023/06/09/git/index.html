@@ -67,16 +67,16 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="Git安装配置"><a href="#Git安装配置" class="headerlink" title="Git安装配置"></a>Git安装配置</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">下载地址： https://git-scm.com/download，选择Windows操作系统下载</span><br></pre></td></tr></table></figure>
+        <h1 id="git安装配置"><a href="#git安装配置" class="headerlink" title="git安装配置"></a>git安装配置</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">下载地址： https://git-scm.com/download，选择Windows操作系统下载</span><br></pre></td></tr></table></figure>
 <p><img src="/../git/1.jpg" alt="图"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安装过程中需要注册，填写用户名及邮箱</span><br></pre></td></tr></table></figure>
 <p><img src="/../git/2.jpg" alt="图"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注：安装完成后需要手动重启资源管理器或重启电脑。</span><br></pre></td></tr></table></figure>
-<h2 id="Git初始化"><a href="#Git初始化" class="headerlink" title="Git初始化"></a>Git初始化</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">初始化一个本地仓</span><br><span class="line"> 选择新建的git_test文件，右键单机，选择Git在这里创建版本库</span><br></pre></td></tr></table></figure>
+<h2 id="git初始化"><a href="#git初始化" class="headerlink" title="git初始化"></a>git初始化</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">初始化一个本地仓</span><br><span class="line"> 选择新建的git_test文件，右键单机，选择git在这里创建版本库</span><br></pre></td></tr></table></figure>
 <p> <img src="/../git/3.jpg" alt="图"><br> <img src="/../git/4.jpg" alt="图"><br> <img src="/../git/5.jpg" alt="图"><br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">操作后可以发现在git_test文件图标上出现了绿色的小勾，说明本地仓库创建成功，在进入该文件夹后还可以发现一个.git文件。此时，git初始化仓库就完成了。</span><br></pre></td></tr></table></figure><br><img src="/../git/6.jpg" alt="图"></p>
-<h2 id="概念即详解"><a href="#概念即详解" class="headerlink" title="概念即详解"></a>概念即详解</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">图中有远程仓库、本地仓库、工作区以及暂存区。</span><br><span class="line">本地仓库：是在开发人员自己电脑上的Git仓库,存放我们的代码。</span><br><span class="line">远程仓库：是在远程服务器上的Git仓库，一般是上传至企业的代码总仓库。</span><br><span class="line">工作区: 我们自己编写代码的区域。</span><br><span class="line">暂存区: 在本地仓库中的一个特殊的文件叫做暂存区,用来临时存储我们即将要提交的文件。</span><br></pre></td></tr></table></figure>
-<h2 id="Git的操作"><a href="#Git的操作" class="headerlink" title="Git的操作"></a>Git的操作</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Clone：克隆，就是将远程仓库复制到本地仓库。</span><br><span class="line">Push：推送，就是将本地仓库代码上传到远程仓库。</span><br><span class="line">Pull：拉取，就是将远程仓库代码下载到本地仓库，并将代码克隆到本地工作区。</span><br></pre></td></tr></table></figure>
-<h2 id="Git下的文件存在的状态"><a href="#Git下的文件存在的状态" class="headerlink" title="Git下的文件存在的状态"></a>Git下的文件存在的状态</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1 untracked 未跟踪: 比如新建的文件(此时文件夹上没有图标或者有一个&quot;问号&quot;)</span><br><span class="line">2 tracked 已跟踪：    </span><br><span class="line">    2.1 Staged 已暂存状态:添加 但未提交状态(此时文件夹上有一个&quot;加号&quot;)</span><br><span class="line">	2.2 Unmodified 未修改状态:已提交(此时文件夹上有一个&quot;对号&quot;)</span><br><span class="line">	2.3 Modified 已修改状态:修改了,但是还没有提交 (此时文件夹上有一个&quot;红色感叹号&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="概念即详解"><a href="#概念即详解" class="headerlink" title="概念即详解"></a>概念即详解</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">图中有远程仓库、本地仓库、工作区以及暂存区。</span><br><span class="line">本地仓库：是在开发人员自己电脑上的git仓库,存放我们的代码。</span><br><span class="line">远程仓库：是在远程服务器上的git仓库，一般是上传至企业的代码总仓库。</span><br><span class="line">工作区: 我们自己编写代码的区域。</span><br><span class="line">暂存区: 在本地仓库中的一个特殊的文件叫做暂存区,用来临时存储我们即将要提交的文件。</span><br></pre></td></tr></table></figure>
+<h2 id="git的操作"><a href="#git的操作" class="headerlink" title="git的操作"></a>git的操作</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Clone：克隆，就是将远程仓库复制到本地仓库。</span><br><span class="line">Push：推送，就是将本地仓库代码上传到远程仓库。</span><br><span class="line">Pull：拉取，就是将远程仓库代码下载到本地仓库，并将代码克隆到本地工作区。</span><br></pre></td></tr></table></figure>
+<h2 id="git下的文件存在的状态"><a href="#git下的文件存在的状态" class="headerlink" title="git下的文件存在的状态"></a>git下的文件存在的状态</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1 untracked 未跟踪: 比如新建的文件(此时文件夹上没有图标或者有一个&quot;问号&quot;)</span><br><span class="line">2 tracked 已跟踪：    </span><br><span class="line">    2.1 Staged 已暂存状态:添加 但未提交状态(此时文件夹上有一个&quot;加号&quot;)</span><br><span class="line">	2.2 Unmodified 未修改状态:已提交(此时文件夹上有一个&quot;对号&quot;)</span><br><span class="line">	2.3 Modified 已修改状态:修改了,但是还没有提交 (此时文件夹上有一个&quot;红色感叹号&quot;)</span><br></pre></td></tr></table></figure>
 <p><img src="/../git/7.jpg" alt="图"><br><img src="/../git/8.jpg" alt="图"><br><img src="/../git/9.jpg" alt="图"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如再次对文件进行修改，文件图表旁会出现一个红色的叹号。</span><br></pre></td></tr></table></figure>
 <p><img src="/../git/10.jpg" alt="图"><br><img src="/../git/11.jpg" alt="图"><br><img src="/../git/12.jpg" alt="图"><br><img src="/../git/13.jpg" alt="图"></p>
@@ -105,7 +105,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/06/09/git/" data-id="clio4yrfm0001v8td81ik3ac5" data-title="git" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/06/09/git/" data-id="clio5a5jo0002y4tdfj4e2jxd" data-title="git" class="article-share-link">Share</a>
       
       
       
@@ -149,19 +149,23 @@
       <ul>
         
           <li>
+            <a href="/2023/06/09/alone/">Spark(stand-alone)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/yarn/">Spark(Yarn)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/local/">Spark(local)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/ha/">Spark(HA)</a>
+          </li>
+        
+          <li>
             <a href="/2023/06/09/Docker/">Docker</a>
-          </li>
-        
-          <li>
-            <a href="/2023/06/09/git/">git</a>
-          </li>
-        
-          <li>
-            <a href="/2023/06/09/hive/">hive</a>
-          </li>
-        
-          <li>
-            <a href="/2023/06/06/hello-world/">Hello World</a>
           </li>
         
       </ul>

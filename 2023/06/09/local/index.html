@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Spark(local) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-local" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/06/09/local/" class="article-date">
+  <time class="dt-published" datetime="2023-06-09T05:45:32.307Z" itemprop="datePublished">2023-06-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Spark(local)
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Spark-local"><a href="#Spark-local" class="headerlink" title="Spark (local)"></a>Spark (local)</h1><h2 id="1-安装python环境到window上"><a href="#1-安装python环境到window上" class="headerlink" title="1.安装python环境到window上"></a>1.安装python环境到window上</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Windows系统配置Anaconda</span><br><span class="line">打开资料中提供的:Anaconda3-2021.05-Windows-x86_64.exe文件</span><br><span class="line">配置国内源加速网络下载</span><br><span class="line">打开C:\Users\用户名\.condarc文件</span><br><span class="line">将以下内容进行替换；</span><br><span class="line">channels:</span><br><span class="line">  - defaults</span><br><span class="line">show_channel_urls: true</span><br><span class="line">default_channels:</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span><br><span class="line">custom_channels:</span><br><span class="line">  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br></pre></td></tr></table></figure>
+<h2 id="2-安装Python环境需要安装到Linux"><a href="#2-安装Python环境需要安装到Linux" class="headerlink" title="2.安装Python环境需要安装到Linux"></a>2.安装Python环境需要安装到Linux</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">创建与你环境 Python，基于Python 3.8</span><br><span class="line">conda create -n pyspark python=3.8</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/1.jpg" alt="图1"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">切换到与你环境内</span><br><span class="line">conda activate pyspark</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/2.jpg" alt="图"></p>
+<h2 id="3-解压下载到spark安装包"><a href="#3-解压下载到spark安装包" class="headerlink" title="3.解压下载到spark安装包"></a>3.解压下载到spark安装包</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf spark-3.2.0-bin-hadoop3.2.tgz -C /export/server/</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/3.jpg" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">配置环境变量</span><br><span class="line">#HADOOP_HOME</span><br><span class="line">export SPARK_HOME=/export/server/spark</span><br><span class="line"></span><br><span class="line">#PYSPARK_PYTHON</span><br><span class="line">export PYSPARK_PYTHON=/export/server/anaconda3/envs/pyspark/bin/python</span><br><span class="line"></span><br><span class="line">#HADOOP_CONF_DIR</span><br><span class="line">export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop</span><br><span class="line"></span><br><span class="line">#ZOOKEEPER_HOME</span><br><span class="line">export ZOOKEEPER_HOME=/export/server/zookeeper</span><br><span class="line">export PATH=$PATH:$ZOOKEEPER_HOME/bin</span><br><span class="line"></span><br><span class="line">export JAVA_HOME=/export/server/jdk1.8.0_2</span><br><span class="line">重置环境变量</span><br><span class="line">Source /etc/profile</span><br><span class="line">PYSPARK_PYTHON和 JAVA_HOME 需要同样配置在: `/root/.bashrc`中</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/4.jpg" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">上传文件到Linux服务器中</span><br><span class="line">解压文件</span><br><span class="line">tar -zxvf spark-3.2.0-bin-hadoop3.2.tgz -C /export/server/</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/5.jpg" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">设置软链接:</span><br><span class="line">ln -s /export/server/spark-3.2.0-bin-hadoop3.2 /export/server/spark</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/6.jpg" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">进去pyspark</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/7.jpg" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">测试：</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/8.jpg" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">打开服务器4040：</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/9.jpg" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Jps查看：</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/10.jpg" alt="图"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/06/09/local/" data-id="clio5a5jq0006y4td8i2ihsmm" data-title="Spark(local)" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/06/09/yarn/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spark(Yarn)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/06/09/ha/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spark(HA)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/09/alone/">Spark(stand-alone)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/yarn/">Spark(Yarn)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/local/">Spark(local)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/ha/">Spark(HA)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/Docker/">Docker</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 By Autoload<br>
+      Driven - <a href="https://hexo.io/" target="_blank">Hexo</a>|Theme - <a href="https://github.com/autoload/hexo-theme-auto" target="_blank">Auto</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

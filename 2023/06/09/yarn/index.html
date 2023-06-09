@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Spark(Yarn) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-yarn" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/06/09/yarn/" class="article-date">
+  <time class="dt-published" datetime="2023-06-09T05:45:32.310Z" itemprop="datePublished">2023-06-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Spark(Yarn)
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Spark-On-YARN-环境搭建部署"><a href="#Spark-On-YARN-环境搭建部署" class="headerlink" title="Spark On YARN 环境搭建部署"></a>Spark On YARN 环境搭建部署</h1><h2 id="1-配置spark-env-sh"><a href="#1-配置spark-env-sh" class="headerlink" title="1.配置spark-env.sh"></a>1.配置spark-env.sh</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Cd /export/server/spark/conf</span><br><span class="line">Vi spark-env.sh</span><br><span class="line">加入一下内容：</span><br><span class="line">## 设置JAVA安装目录</span><br><span class="line">JAVA_HOME=/export/server/jdk</span><br><span class="line"></span><br><span class="line">## HADOOP软件配置文件目录，读取HDFS上文件和运行YARN集群</span><br><span class="line">HADOOP_CONF_DIR=/export/server/hadoop/etc/hadoop</span><br><span class="line">YARN_CONF_DIR=/export/server/hadoop/etc/hadoop</span><br><span class="line"></span><br><span class="line">## 指定spark老大Master的IP和提交任务的通信端口</span><br><span class="line"># 告知Spark的master运行在哪个机器上</span><br><span class="line"></span><br><span class="line"># 告知sparkmaster的通讯端口</span><br><span class="line">export SPARK_MASTER_PORT=7077</span><br><span class="line"># 告知spark master的 webui端口</span><br><span class="line">SPARK_MASTER_WEBUI_PORT=8080</span><br><span class="line"></span><br><span class="line"># worker cpu可用核数</span><br><span class="line">SPARK_WORKER_CORES=1</span><br><span class="line"># worker可用内存</span><br><span class="line">SPARK_WORKER_MEMORY=1g</span><br><span class="line"># worker的工作通讯地址</span><br><span class="line">SPARK_WORKER_PORT=7078</span><br><span class="line"># worker的 webui地址</span><br><span class="line">SPARK_WORKER_WEBUI_PORT=8081</span><br><span class="line"></span><br><span class="line">## 设置历史服务器</span><br><span class="line"># 配置的意思是  将spark程序运行的历史日志 存到hdfs的/sparklog文件夹中</span><br><span class="line">SPARK_HISTORY_OPTS=&quot;-Dspark.history.fs.logDirectory=hdfs://node1:8020/sparklog/ -Dspark.history.fs.cleaner.enabled=true&quot;</span><br><span class="line">SPARK_DAEMON_JAVA_OPTS=&quot;-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deploy.zookeeper.url=node1:2181,node2:2181,node3:2181 -Dspark.deploy.zookeeper.dir=/spark-ha&quot;</span><br><span class="line"># spark.deploy.recoveryMode 指定HA模式 基于Zookeeper实现</span><br><span class="line"># 指定Zookeeper的连接地址</span><br><span class="line"># 指定在Zookeeper中注册临时节点的路径</span><br></pre></td></tr></table></figure>
+<p><img src="/../sparkha/7.png" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">连接YARN</span><br><span class="line">bin/pyspark --master yarn --deploy-mode client|cluster</span><br></pre></td></tr></table></figure>
+<p><img src="/../sparkha/8.png" alt="图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/spark-shell --master yarn --deploy-mode client|cluster</span><br></pre></td></tr></table></figure>
+<p><img src="/../sparkha/9.png" alt="图"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/06/09/yarn/" data-id="clio5a5jr0007y4tdchk4ct27" data-title="Spark(Yarn)" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/06/09/alone/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spark(stand-alone)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/06/09/local/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spark(local)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/09/alone/">Spark(stand-alone)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/yarn/">Spark(Yarn)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/local/">Spark(local)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/ha/">Spark(HA)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/Docker/">Docker</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 By Autoload<br>
+      Driven - <a href="https://hexo.io/" target="_blank">Hexo</a>|Theme - <a href="https://github.com/autoload/hexo-theme-auto" target="_blank">Auto</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
