@@ -57,7 +57,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="speak全流程配置"><a href="#speak全流程配置" class="headerlink" title="speak全流程配置"></a>speak全流程配置</h1><h2 id="hive安装"><a href="#hive安装" class="headerlink" title="hive安装"></a>hive安装</h2><h3 id="1、上传安装包-解压"><a href="#1、上传安装包-解压" class="headerlink" title="1、上传安装包 解压"></a>1、上传安装包 解压</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf apache-hive-3.1.2-bin.tar.gz</span><br><span class="line">ln -s apache-hive-3.1.2-bin hive</span><br></pre></td></tr></table></figure>
+        <h2 id="hive安装"><a href="#hive安装" class="headerlink" title="hive安装"></a>hive安装</h2><h3 id="1、上传安装包-解压"><a href="#1、上传安装包-解压" class="headerlink" title="1、上传安装包 解压"></a>1、上传安装包 解压</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf apache-hive-3.1.2-bin.tar.gz</span><br><span class="line">ln -s apache-hive-3.1.2-bin hive</span><br></pre></td></tr></table></figure>
 <h3 id="2、解决Hive与hadoop之间guava版本差异"><a href="#2、解决Hive与hadoop之间guava版本差异" class="headerlink" title="2、解决Hive与hadoop之间guava版本差异"></a>2、解决Hive与hadoop之间guava版本差异</h3><p>···<br>cd &#x2F;export&#x2F;server&#x2F;hive&#x2F;<br>rm -rf lib&#x2F;guava-19.0.jar<br>cp &#x2F;export&#x2F;server&#x2F;hadoop&#x2F;share&#x2F;hadoop&#x2F;common&#x2F;lib&#x2F;guava-27.0-jre.jar .&#x2F;lib&#x2F;<br>···</p>
 <h3 id="3、修改配置文件"><a href="#3、修改配置文件" class="headerlink" title="3、修改配置文件"></a>3、修改配置文件</h3><p>···<br>cd &#x2F;export&#x2F;server&#x2F;hive&#x2F;conf<br>mv hive-env.sh.template hive-env.sh</p>
 <p>vim hive-env.sh<br>export HADOOP_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;hadoop<br>export HIVE_CONF_DIR&#x3D;&#x2F;export&#x2F;server&#x2F;hive&#x2F;conf<br>export HIVE_AUX_JARS_PATH&#x3D;&#x2F;export&#x2F;server&#x2F;hive&#x2F;lib<br>···<br><img src="/../images/2.jpg" alt="图"></p>
@@ -83,7 +83,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/06/09/hive/" data-id="clinyyi25000178td1ib50vki" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/06/09/hive/" data-id="clinz2rb8000294td0n8cehga" data-title="" class="article-share-link">Share</a>
       
       
       
