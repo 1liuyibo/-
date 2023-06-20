@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Flume | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-flume" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/06/20/flume/" class="article-date">
+  <time class="dt-published" datetime="2023-06-20T03:42:36.470Z" itemprop="datePublished">2023-06-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Flume
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>将apache-flume-1.9.0-bin.tar.gz下载到CentOS系统中，对其解压</p>
+<p>解压命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xzf apache-flume-1.9.0-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>添加软连接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s apache-flume-1.9.0-bin flume</span><br></pre></td></tr></table></figure>
+
+<p>Flume使用需要依赖JDK1.8以上环境，确保已安装</p>
+<p>将Flume安装目录配置到PATH中，方便在任意目录使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#FLUME_HOME</span><br><span class="line">export FLUME_HOME=/export/server/flume</span><br><span class="line">export PATH=$PATH:$FLUME_HOME/bin</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/1.png" alt="图 1"></p>
+<p>保存成功后刷新</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>查看是否设置成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $FLUME_HOME</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/2.png" alt="图 2"></p>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><h3 id="一、入门使用示例"><a href="#一、入门使用示例" class="headerlink" title="一、入门使用示例"></a>一、入门使用示例</h3><p>1、	安装Netcat</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nc</span><br></pre></td></tr></table></figure>
+
+<p>2、	在flume&#x2F;myconf目录下添加配置文件netcat-logger.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># example1-netcat-logger.conf: 单节点Flume配置</span><br><span class="line"># 定义agent名称为a1</span><br><span class="line"># 设置3个组件的名称</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line"># 配置source类型为NetCat,监听地址为本机，端口为44444</span><br><span class="line">a1.sources.r1.type = netcat</span><br><span class="line">a1.sources.r1.bind = 0.0.0.0</span><br><span class="line">a1.sources.r1.port = 44444</span><br><span class="line"></span><br><span class="line">#source和channel关联</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line"></span><br><span class="line"># 配置channel类型为内存，内存队列最大容量为1000，一个事务中从source接收的Events数量或者发送给sink的Events数量最大为100</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 配置sink类型为Logger</span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"># 将sink绑定到channel上</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/3.png" alt="图 3"></p>
+<p>3、	启动agent</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -n a1 -c conf -f myconf/example1-netcat-logger.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/4.png" alt="图 4"></p>
+<p>4、	使用Netcat测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">从另一个终端启动Netcat连接到44444端口，发送一些字符串</span><br><span class="line">nc node1 44444</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/5.png" alt="图 5"></p>
+<p>观察agent控制台</p>
+<p><img src="/../flume/6.png" alt="图 6"></p>
+<h3 id="二、exec-source测试"><a href="#二、exec-source测试" class="headerlink" title="二、exec_source测试"></a>二、exec_source测试</h3><p>1、	配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">vim exec-source-logger.conf</span><br><span class="line"></span><br><span class="line"># example2-exec-source-logger.conf</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sources.r1.command = tail -F /export/data/flume-example-data/shell/access.log </span><br><span class="line">a1.sources.r1.batchSize = 100</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/7.png" alt="图 7"></p>
+<p>2、	启动测试</p>
+<p>（1）准备一个日志文件</p>
+<p>（2）写一个脚本模拟往日志文件中持续写入数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for i in &#123;1..10000&#125;; </span><br><span class="line">do echo $&#123;i&#125; “bigdata log”  &gt;&gt;  access.log ; </span><br><span class="line">sleep 0.5; </span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/8.png" alt="图 8"></p>
+<p>（3）创建一个flume自定义配置文件</p>
+<p>（4）启动flume采集</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -n a1 -c conf/ -f myconf/example2-exec-source-logger.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/9.png" alt="图 9"></p>
+<h3 id="三、spooldir-source测试"><a href="#三、spooldir-source测试" class="headerlink" title="三、spooldir_source测试"></a>三、spooldir_source测试</h3><p>1、	配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">vim spooldir-source.conf</span><br><span class="line"></span><br><span class="line">#example3-spooldir-source.conf</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sources.r1.type = spooldir</span><br><span class="line">a1.sources.r1.spoolDir = /export/data/flume-example-data/weblog </span><br><span class="line"></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/10.png" alt="图 10"></p>
+<p>2、	启动测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -n a1 -c conf -f myconf/example3-spooldir-source.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/11.png" alt="图 11"></p>
+<h3 id="四、taildir-source测试"><a href="#四、taildir-source测试" class="headerlink" title="四、taildir_source测试"></a>四、taildir_source测试</h3><p>1、	配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">vim taildir-source.conf</span><br><span class="line"></span><br><span class="line">#example4-taildir-source.conf</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line">a1.sources.r1.type = TAILDIR</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sources.r1.positionFile = /export/data/flume-example-data/flumedata/taildir_position.json</span><br><span class="line">a1.sources.r1.filegroups = g1 g2</span><br><span class="line">a1.sources.r1.filegroups.g1 = /export/data/flume-example-data/weblog/web.*</span><br><span class="line">a1.sources.r1.filegroups.g2 = /export/data/flume-example-data/wxlog/wx.*</span><br><span class="line">a1.sources.r1.fileHeader = true</span><br><span class="line">#动态的header-keys eg：filepath=/../../../</span><br><span class="line">a1.sources.r1.fileHeaderKey = filepath</span><br><span class="line"></span><br><span class="line">#写死的header-keys（静态的） eg:a1 = aa1</span><br><span class="line">a1.sources.r1.headers.g1.a1 = aa1</span><br><span class="line">a1.sources.r1.headers.g1.b1 = bb1</span><br><span class="line">a1.sources.r1.headers.g2.a2 = aa2</span><br><span class="line">a1.sources.r1.headers.g2.b2 = bb2</span><br><span class="line"></span><br><span class="line">a1.sources.r1.maxBatchCount = 1000</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 10000</span><br><span class="line">a1.channels.c1.transactionCapacity = 1000</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/12.png" alt="图 12"></p>
+<p>2、	启动测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -n a1 -c conf/ -f  myconf/example4-taildir-source.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/13.png" alt="图 13"></p>
+<h3 id="五、avro-source"><a href="#五、avro-source" class="headerlink" title="五、avro source"></a>五、avro source</h3><p>1、	配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">vim avro-source.conf</span><br><span class="line"></span><br><span class="line">#example5-avro-source.conf</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sources.r1.type = avro</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sources.r1.bind = 0.0.0.0</span><br><span class="line">a1.sources.r1.port = 4141</span><br><span class="line"></span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 200</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/14.png" alt="图 14"></p>
+<p>2、	启动测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -c conf -f  myconf/example5-avro-source.conf -n a1 -Dflume.root.logger=INFO,console  </span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/15.png" alt="图 15"></p>
+<h3 id="六、使用File-Channel实现数据持久化"><a href="#六、使用File-Channel实现数据持久化" class="headerlink" title="六、使用File Channel实现数据持久化"></a>六、使用File Channel实现数据持久化</h3><p>1、	配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">vim file-channel.conf</span><br><span class="line"></span><br><span class="line">#example6-file-channel.conf</span><br><span class="line"># 定义agent名称为a1</span><br><span class="line"># 设置3个组件的名称</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"># 多个channel使用空格分隔</span><br><span class="line">a1.channels = c1 c2</span><br><span class="line"></span><br><span class="line"># 配置source类型为NetCat,监听地址为本机，端口为44444</span><br><span class="line">a1.sources.r1.type = netcat</span><br><span class="line">a1.sources.r1.bind = 0.0.0.0</span><br><span class="line">a1.sources.r1.port = 44444</span><br><span class="line"></span><br><span class="line"># 配置sink类型为Logger</span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"></span><br><span class="line"># 配置channel类型为内存，内存队列最大容量为1000，一个事务中从source接收的Events数量或者发送给sink的Events数量最大为100</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 配置FileChannel,checkpointDir为检查点文件存储目录，dataDirs为日志数据存储目录，</span><br><span class="line">a1.channels.c2.type = file</span><br><span class="line">a1.channels.c2.checkpointDir = /export/data/flume-example-data/flumedata/checkpoint_filechannel</span><br><span class="line">a1.channels.c2.dataDirs = /export/data/flume-example-data/flumedata/data_filechannel</span><br><span class="line"></span><br><span class="line"># 将source和sink绑定到channel上</span><br><span class="line"># source同时绑定到c1和c2上</span><br><span class="line">a1.sources.r1.channels = c1 c2</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/16.png" alt="图 16"></p>
+<p>2、	启动flume</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -n a1 -c conf -f myconf/example6-file-channel.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/17.png" alt="图 17"></p>
+<h3 id="七、利用avro-source和avro-sink实现agent级联"><a href="#七、利用avro-source和avro-sink实现agent级联" class="headerlink" title="七、利用avro source和avro sink实现agent级联"></a>七、利用avro source和avro sink实现agent级联</h3><p>1、	配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">vim taildir-f-avro.conf</span><br><span class="line"></span><br><span class="line">#上游服务器配置 example7-1-taildir-f-avro.conf</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line">a1.sources.r1.type = TAILDIR</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sources.r1.positionFile = /export/data/flume-example-data/flumedata/taildir_position.json</span><br><span class="line">a1.sources.r1.filegroups = g1 g2</span><br><span class="line">a1.sources.r1.filegroups.g1 = /export/data/flume-example-data/weblog/web.*</span><br><span class="line">a1.sources.r1.filegroups.g2 = /export/data/flume-example-data/wxlog/wx.*</span><br><span class="line">#提高吞吐量</span><br><span class="line">a1.sources.r1.batchSize = 1000</span><br><span class="line">#动态的header-keys eg：filepath=/../../../</span><br><span class="line">a1.sources.r1.fileHeaderKey = filepath</span><br><span class="line"></span><br><span class="line">#拦截器配置，添加header=timestamp</span><br><span class="line">a1.sources.r1.interceptors = i1</span><br><span class="line">a1.sources.r1.interceptors.i1.type = timestamp</span><br><span class="line">a1.sources.r1.interceptors.i1.headerName = timestamp</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type = file</span><br><span class="line">#本机数据汇集检查点、event存储目录</span><br><span class="line">a1.channels.c1.checkpointDir = /export/data/flume-example-data/flumedata/checkpoint</span><br><span class="line">a1.channels.c1.dataDirs = /export/data/flume-example-data/flumedata/data</span><br><span class="line">a1.channels.c1.transactionCapacity = 2000</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line">a1.sinks.k1.batch-size = 1000</span><br><span class="line">#下游目标主机、端口</span><br><span class="line">a1.sinks.k1.hostname = node3</span><br><span class="line">a1.sinks.k1.port = 44444</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/18.png" alt="图 18"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">vim avro-f-hdfs.conf</span><br><span class="line"></span><br><span class="line">#下游服务器配置 example7-2-avro-f-hdfs.conf</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line">#下游数据汇集avro source</span><br><span class="line">a1.sources.r1.type = avro</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sources.r1.bind = 0.0.0.0</span><br><span class="line">a1.sources.r1.port = 44444</span><br><span class="line">a1.sources.r1.threads = 10</span><br><span class="line">a1.sources.r1.batchSize = 1000</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type = file</span><br><span class="line">a1.channels.c1.checkpointDir = /export/data/flume-example-data/flumedata/checkpoint</span><br><span class="line">a1.channels.c1.dataDirs = /export/data/flume-example-data/flumedata/data</span><br><span class="line">a1.channels.c1.transactionCapacity = 2000</span><br><span class="line"></span><br><span class="line">#hdfs sink</span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://node1:8020/logdata/%Y-%m-%d/%H/</span><br><span class="line">#eg：文件名 logdata_34438hxfd.log，在滚动时，logdata_34438hxfd.log.tmp</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = logdata_</span><br><span class="line">a1.sinks.k1.hdfs.fileSuffix = .log</span><br><span class="line"></span><br><span class="line">#三个条件没有优先级，谁先达到就进行滚动</span><br><span class="line">#按时间间隔滚动</span><br><span class="line">a1.sinks.k1.hdfs.rollInterval = 0</span><br><span class="line">#按文件大小滚动 256MB</span><br><span class="line">a1.sinks.k1.hdfs.rollSize = 268435456</span><br><span class="line">#按event条数滚动</span><br><span class="line">a1.sinks.k1.hdfs.rollCount = 100000</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.hdfs.batchSize = 1000</span><br><span class="line">a1.sinks.k1.hdfs.codeC = gzip</span><br><span class="line">a1.sinks.k1.hdfs.fileType = CompressedStream</span><br></pre></td></tr></table></figure>
+<p><img src="/../flume/19.png" alt="图 19"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/06/20/flume/" data-id="clj3qrjai0002estd7hawflsi" data-title="Flume" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/06/20/zookeeper/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Zookeeper</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/20/flume/">Flume</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/20/zookeeper/">Zookeeper</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/20/sqoop/">Sqoop</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/20/kafka/">Kafka</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/alone/">Spark(stand-alone)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 By Autoload<br>
+      Driven - <a href="https://hexo.io/" target="_blank">Hexo</a>|Theme - <a href="https://github.com/autoload/hexo-theme-auto" target="_blank">Auto</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Zookeeper | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-zookeeper" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/06/20/zookeeper/" class="article-date">
+  <time class="dt-published" datetime="2023-06-20T03:42:36.467Z" itemprop="datePublished">2023-06-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Zookeeper
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一-准备工作"><a href="#一-准备工作" class="headerlink" title="一.准备工作"></a>一.准备工作</h2><p>安装前需要安装好jdk</p>
+<p>检测集群时间是否同步</p>
+<p>检测防火墙是否关闭</p>
+<p>检测主机 ip映射有没有配置</p>
+<h2 id="二-解压zookeeper安装包"><a href="#二-解压zookeeper安装包" class="headerlink" title="二.解压zookeeper安装包"></a>二.解压zookeeper安装包</h2><p>在node1主机上，解压zookeeper的压缩包到&#x2F;export&#x2F;server路径下去，然后准备进行安装</p>
+<p><img src="/../zookeeper/1.png" alt="图 1"></p>
+<p>创建软连接</p>
+<p><img src="/../zookeeper/2.png" alt="图 2"></p>
+<h2 id="三-修改环境变量"><a href="#三-修改环境变量" class="headerlink" title="三.修改环境变量"></a>三.修改环境变量</h2><p>注意：三台虚拟机都要修改</p>
+<p><img src="/../zookeeper/3.png" alt="图 3"><br><img src="/../zookeeper/4.png" alt="图 4"><br><img src="/../zookeeper/5.png" alt="图 5"></p>
+<h2 id="四-修改配置文件"><a href="#四-修改配置文件" class="headerlink" title="四.修改配置文件"></a>四.修改配置文件</h2><p>修改zookeeper配置文件</p>
+<p><img src="/../zookeeper/6.png" alt="图 6"></p>
+<p>创建目录</p>
+<p><img src="/../zookeeper/7.png" alt="图 7"></p>
+<p>修改 zoo.cfg</p>
+<p>增加下列内容</p>
+<p><img src="/../zookeeper/8.png" alt="图 8"></p>
+<h2 id="五-添加myid配置"><a href="#五-添加myid配置" class="headerlink" title="五.添加myid配置"></a>五.添加myid配置</h2><p>在node1主机的&#x2F;export&#x2F;data&#x2F;zookeeper&#x2F;zkdatas&#x2F;这个路径下创建一个文件，文件名为myid ,文件内容为1</p>
+<p><img src="/../zookeeper/9.png" alt="图 9"></p>
+<h2 id="六-安装包分发并修改myid的值"><a href="#六-安装包分发并修改myid的值" class="headerlink" title="六.安装包分发并修改myid的值"></a>六.安装包分发并修改myid的值</h2><p>在node1主机上，将安装包分发到其他机器第一台机器上面执行以下两个命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp -r /export/server/apache-zookeeper-3.7.0-bin/ root@node2:/export/server/</span><br><span class="line">scp -r /export/server/apache-zookeeper-3.7.0-bin/ root@node3:/export/server/</span><br></pre></td></tr></table></figure>
+<p><img src="/../zookeeper/10.png" alt="图 10"></p>
+<p>第二台机器上建立软连接并修改myid的值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /export/server</span><br><span class="line">ln -s apache-zookeeper-3.7.0-bin/ zookeeper</span><br><span class="line">echo 2 &gt; /export/data/zookeeper/zkdatas/myid </span><br></pre></td></tr></table></figure>
+<p><img src="/../zookeeper/11.png" alt="图 11"></p>
+<p>第三台同理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /export/server</span><br><span class="line">ln -s apache-zookeeper-3.7.0-bin/ zookeeper</span><br><span class="line">echo 3&gt; /export/data/zookeeper/zkdatas/myid </span><br></pre></td></tr></table></figure>
+<p><img src="/../zookeeper/12.png" alt="图 12"></p>
+<h2 id="七-三台机器启动zookeeper服务"><a href="#七-三台机器启动zookeeper服务" class="headerlink" title="七.三台机器启动zookeeper服务"></a>七.三台机器启动zookeeper服务</h2><p><img src="/../zookeeper/13.png" alt="图 13"><br><img src="/../zookeeper/14.png" alt="图 14"><br><img src="/../zookeeper/15.png" alt="图 15"><br><img src="/../zookeeper/16.png" alt="图 16"></p>
+<p>编写一个shell脚本同时启动三台机器的zookeeper服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">if [ $# -eq 0 ] #  $#参数的个数</span><br><span class="line">then</span><br><span class="line">    echo &quot;please input param:start stop status&quot;</span><br><span class="line">else</span><br><span class="line">    if [ $1 = start  ]</span><br><span class="line">    then</span><br><span class="line">        for i in &#123;1..3&#125;</span><br><span class="line">        do</span><br><span class="line">            echo &quot;$&#123;1&#125;ing node$&#123;i&#125;&quot;</span><br><span class="line">            ssh node$&#123;i&#125; &quot;source /etc/profile;/export/server/zookeeper/bin/zkServer.sh start&quot;</span><br><span class="line">        done</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    if [ $1 = stop ]</span><br><span class="line">    then</span><br><span class="line">        for i in &#123;1..3&#125;</span><br><span class="line">        do</span><br><span class="line">            echo &quot;$&#123;1&#125;ping node$&#123;i&#125;&quot;</span><br><span class="line">            ssh node$&#123;i&#125; &quot;source /etc/profile;/export/server/zookeeper/bin/zkServer.sh stop&quot;</span><br><span class="line">        done</span><br><span class="line">    fi</span><br><span class="line">    </span><br><span class="line">    if [ $1 = status ]</span><br><span class="line">    then</span><br><span class="line">        for i in &#123;1..3&#125;</span><br><span class="line">        do</span><br><span class="line">            echo &quot;node$&#123;i&#125; status:&quot;</span><br><span class="line">            ssh node$&#123;i&#125; &quot;source /etc/profile;/export/server/zookeeper/bin/zkServer.sh status&quot;</span><br><span class="line">        done</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p><img src="/../zookeeper/17.png" alt="图 17"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/06/20/zookeeper/" data-id="clj3qrjan0009estd6clagb9u" data-title="Zookeeper" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/06/20/flume/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Flume
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/06/20/sqoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Sqoop</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/20/flume/">Flume</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/20/zookeeper/">Zookeeper</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/20/sqoop/">Sqoop</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/20/kafka/">Kafka</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/09/alone/">Spark(stand-alone)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 By Autoload<br>
+      Driven - <a href="https://hexo.io/" target="_blank">Hexo</a>|Theme - <a href="https://github.com/autoload/hexo-theme-auto" target="_blank">Auto</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
